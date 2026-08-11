@@ -1,0 +1,289 @@
+/*
+ * PrepXP — Global Stylesheet
+ * Tailwind CSS v4  ·  Design tokens live here, not in tailwind.config.js
+ *
+ * @theme  → Generates bg-*, text-*, border-* utility classes automatically
+ * @utility → Custom single-class utilities (glass, gradient-brand, glow-*)
+ * @layer base → Document-level resets and base element styles
+ */
+
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS
+   Every color / font / animation used in the app
+   is declared here and nowhere else.
+   ═══════════════════════════════════════════════════ */
+@theme {
+
+  /* ─── Surfaces ─── */
+  --color-canvas:   #060914;   /* page background                    */
+  --color-card:     #0D1221;   /* default card                       */
+  --color-elevated: #131929;   /* elevated / nested card             */
+  --color-surface:  #1A2235;   /* input backgrounds, badges          */
+
+  /* ─── Brand: Purple → Cyan gradient system ─── */
+  --color-purple:   #7C3AED;
+  --color-violet:   #9333EA;
+  --color-indigo:   #4F46E5;
+  --color-cyan:     #06B6D4;
+  --color-sky:      #38BDF8;
+  --color-blue:     #3B82F6;
+
+  /* ─── Subject accent colors ─── */
+  --color-physics:   #38BDF8;  /* Physics   — sky blue              */
+  --color-chemistry: #34D399;  /* Chemistry — emerald               */
+  --color-math:      #A78BFA;  /* Math      — soft violet           */
+
+  /* ─── Gamification ─── */
+  --color-xp:     #F59E0B;     /* XP points — amber                 */
+  --color-streak: #F97316;     /* Streak    — orange                */
+  --color-coin:   #EAB308;     /* Coins     — gold                  */
+  --color-level:  #8B5CF6;     /* Level     — purple                */
+
+  /* ─── Text hierarchy ─── */
+  --color-frost:  #F8FAFC;     /* primary text                      */
+  --color-snow:   #CBD5E1;     /* secondary text                    */
+  --color-mist:   #64748B;     /* muted / placeholder               */
+  --color-dim:    #334155;     /* disabled / decorative             */
+
+  /* ─── Semantic status ─── */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger:  #EF4444;
+
+  /* ─── Typography ─── */
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ─── Custom animations (generates animate-* utilities) ─── */
+  --animate-shimmer:    shimmer 2.2s linear infinite;
+  --animate-pulse-soft: pulse-soft 2.5s ease-in-out infinite;
+  --animate-float:      float 6s ease-in-out infinite;
+  --animate-glow:       glow-breathe 3s ease-in-out infinite;
+}
+
+/* ─── Keyframes ─── */
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1;    }
+  50%       { opacity: 0.6; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-5px); }
+}
+
+@keyframes glow-breathe {
+  0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.2); }
+  50%       { box-shadow: 0 0 40px rgba(124, 58, 237, 0.45); }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════ */
+@layer base {
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    /* Disable iOS tap highlight flash */
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family:              var(--font-sans);
+    background-color:         var(--color-canvas);
+    color:                    var(--color-frost);
+    -webkit-font-smoothing:   antialiased;
+    -moz-osx-font-smoothing:  grayscale;
+    /* Prevent overscroll bounce on iOS */
+    overscroll-behavior:      none;
+    min-height:               100dvh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family:     var(--font-display);
+    letter-spacing:  -0.025em;
+    line-height:     1.2;
+    color:           var(--color-frost);
+  }
+
+  /* Minimal scrollbar — desktop only */
+  ::-webkit-scrollbar        { width: 3px; height: 3px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  {
+    background:    rgba(255, 255, 255, 0.08);
+    border-radius: 99px;
+  }
+
+  /* Remove number input arrows */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   CUSTOM UTILITIES
+   Use with className="glass", "gradient-brand", etc.
+   ═══════════════════════════════════════════════════ */
+
+/* ─── Glassmorphism layers ─── */
+@utility glass {
+  background:            rgba(13, 18, 33, 0.70);
+  backdrop-filter:       blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border:                1px solid rgba(255, 255, 255, 0.07);
+}
+
+@utility glass-elevated {
+  background:            rgba(19, 25, 41, 0.82);
+  backdrop-filter:       blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border:                1px solid rgba(255, 255, 255, 0.10);
+}
+
+@utility glass-strong {
+  background:            rgba(6, 9, 20, 0.88);
+  backdrop-filter:       blur(32px) saturate(1.8);
+  -webkit-backdrop-filter: blur(32px) saturate(1.8);
+  border:                1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Brand gradients ─── */
+@utility gradient-brand {
+  background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-cyan) 100%);
+}
+
+@utility gradient-brand-r {
+  background: linear-gradient(135deg, var(--color-cyan) 0%, var(--color-purple) 100%);
+}
+
+@utility gradient-brand-subtle {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.12) 0%,
+    rgba(6,  182, 212, 0.07) 100%
+  );
+}
+
+@utility gradient-gold {
+  background: linear-gradient(135deg, var(--color-xp) 0%, var(--color-streak) 100%);
+}
+
+@utility gradient-card {
+  background: linear-gradient(160deg, var(--color-card) 0%, var(--color-elevated) 100%);
+}
+
+/* ─── Gradient text ─── */
+@utility text-gradient-brand {
+  background:                  linear-gradient(135deg, var(--color-purple), var(--color-cyan));
+  -webkit-background-clip:     text;
+  -webkit-text-fill-color:     transparent;
+  background-clip:             text;
+}
+
+@utility text-gradient-gold {
+  background:                  linear-gradient(135deg, var(--color-xp), var(--color-streak));
+  -webkit-background-clip:     text;
+  -webkit-text-fill-color:     transparent;
+  background-clip:             text;
+}
+
+/* ─── Glow effects ─── */
+@utility glow-purple {
+  box-shadow: 0 0 28px rgba(124, 58, 237, 0.35),
+              0 0 64px rgba(124, 58, 237, 0.12);
+}
+
+@utility glow-cyan {
+  box-shadow: 0 0 28px rgba(6, 182, 212, 0.30),
+              0 0 64px rgba(6, 182, 212, 0.10);
+}
+
+@utility glow-card {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.55),
+              0 1px 0   rgba(255, 255, 255, 0.04) inset;
+}
+
+/* ─── Skeleton loading ─── */
+@utility skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04)  0%,
+    rgba(255, 255, 255, 0.09) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 200% auto;
+  animation:       var(--animate-shimmer);
+}
+
+/* ─── iOS safe area ─── */
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+
+/* ═══════════════════════════════════════════════════
+   THEME OVERRIDES
+   Applied via data-theme="..." on <html>.
+   SettingsContext sets this attribute when theme changes.
+   Tailwind utilities reference var(--color-*) which
+   CSS specificity overrides from these selectors.
+   ═══════════════════════════════════════════════════ */
+
+/* ─── Ocean Night ─── */
+[data-theme="ocean"] {
+  --color-canvas:   #030D1A;
+  --color-card:     #051525;
+  --color-elevated: #0A1E35;
+  --color-surface:  #0F2A45;
+  --color-purple:   #0EA5E9;
+  --color-violet:   #38BDF8;
+  --color-cyan:     #22D3EE;
+}
+
+/* ─── Nebula ─── */
+[data-theme="nebula"] {
+  --color-canvas:   #0A0520;
+  --color-card:     #130930;
+  --color-elevated: #1C0C42;
+  --color-surface:  #250F55;
+  --color-purple:   #A855F7;
+  --color-violet:   #C084FC;
+  --color-cyan:     #EC4899;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   REDUCED MOTION
+   .reduce-motion is toggled on <html> by SettingsContext.
+   Framer Motion is also disabled via MotionConfig in App.jsx.
+   ═══════════════════════════════════════════════════ */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration:        0.001ms !important;
+  animation-delay:           0.001ms !important;
+  animation-iteration-count: 1       !important;
+  transition-duration:       0.001ms !important;
+  transition-delay:          0.001ms !important;
+}
